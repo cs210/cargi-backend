@@ -1,13 +1,12 @@
 import web, os
 import json
 
-import flask
 import httplib2
 
 from apiclient import discovery
 from oauth2client import client
 
-app = flask.Flask(__name__)
+# app = flask.Flask(__name__)
 
 render = web.template.render('templates/')
 
@@ -17,14 +16,14 @@ urls = (
 
 class index:
     def GET(self):
-        flow = client.flow_from_clientsecrets(
-        'client_secrets.json',
-        scope='https://www.googleapis.com/auth/drive.metadata.readonly',
-        redirect_uri='http://www.example.com/oauth2callback')
-        auth_uri = flow.step1_get_authorize_url()
-        credentials = flow.step2_exchange(auth_code)
-        http_auth = credentials.authorize(httplib2.Http())
-        drive_service = build('drive', 'v2', http=http_auth)
+        # flow = client.flow_from_clientsecrets(
+        # 'client_secrets.json',
+        # scope='https://www.googleapis.com/auth/drive.metadata.readonly',
+        # redirect_uri='http://www.example.com/oauth2callback')
+        # auth_uri = flow.step1_get_authorize_url()
+        # credentials = flow.step2_exchange(auth_code)
+        # http_auth = credentials.authorize(httplib2.Http())
+        # drive_service = build('drive', 'v2', http=http_auth)
         return render.index();
 class confirmNavigation:
     def GET(self):
