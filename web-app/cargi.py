@@ -3,7 +3,7 @@ import json
 
 import httplib2
 
-from apiclient import discovery
+from googleapiclient import discovery
 from oauth2client import client
 
 # app = flask.Flask(__name__)
