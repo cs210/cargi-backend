@@ -6,3 +6,13 @@ Many tools in our lives are personalized, and we should expect the same things f
 To run the iOS app, you must import the GoogleMaps framework, which is stored in our Google Drive due to its large size. Place the GoogleMaps.framework file in `iOS > CargiApp > Pods > GoogleMaps > Frameworks`.
 
 **Important**: Do not use `.xcodeproject` file to open Xcode; use `iOS > CargiApp > CargiApp.xcworkspace` instead.
+
+
+# Instructions for Node.js app:
+
+. Install homebrew
+. Install npm
+. Go into cargi-webapp/nodeapp
+. Do `npm install`
+. Run with `DEBUG=myapp:* npm start` on Mac or `set DEBUG=myapp:* & npm start` on Windows
+
