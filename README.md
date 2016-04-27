@@ -10,3 +10,15 @@ Many tools in our lives are personalized, and we should expect the same things f
 . Do `npm install`
 . Run with `DEBUG=myapp:* npm start` on Mac or `set DEBUG=myapp:* & npm start` on Windows
 
+# Instruction for using the gas price api:
+
+Go to https://frozen-meadow-85846.herokuapp.com/scrape/
+
+Then add the [city]/[state]/[zipcode] to get gas info for that area.
+
+Example: https://frozen-meadow-85846.herokuapp.com/scrape/redmond/wa/98052
+
+For a city with two words (Palo Alto) use a + between the two words (palo+alto)
+
+You will get a json object with the name of each station, the price, and its address
+
