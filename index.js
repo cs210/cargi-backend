@@ -32,67 +32,48 @@ app.get('/scrape/:city/:state/:zip', function(req, res){
     if (!error) {
       var $ = cheerio.load(html);
       var prices;
-      var json = {price : "", station : ""};
+      var json = {stations : []};
+      var prices = [];
+      var station_names = [];
+      var street_addresses = [];
+      var cities = [];
+      var states = [];
+      var zip_codes = [];
       $('.price').each(function() {
-        console.log("asdfghsadfhsadhjgadfs");
         var data = $(this);
-        console.log("price");
-        title = data.text();
-        console.log(title);
-        json.title = title;
+        price = data.text();
+        prices.push(price);
       })
       $('.name.link').each(function() {
-        console.log("asdfghsadfhsadhjgadfs");
         var data = $(this);
-        console.log("price");
-        title = data.text();
-        console.log(title);
-        json.title = title;
+        station_name = data.text();
+        station_names.push(station_name);
       })
       $('.street-address').each(function() {
         var data = $(this);
-        //title is first child of header
-        // title = data.children().first().text();
-        console.log("name");
-        title = data.text();
-        console.log(title);
-        // release = data.children().last().children().text();
-        json.title = title;
-        // json.release = release;
+        street_address = data.text();
+        street_addresses.push(street_address);
       })
       $('.locality').each(function() {
         var data = $(this);
-        //title is first child of header
-        // title = data.children().first().text();
-        console.log("name");
-        title = data.text();
-        console.log(title);
-        // release = data.children().last().children().text();
-        json.title = title;
-        // json.release = release;
+        city = data.text();
+        cities.push(city);
       })
       $('.region').each(function() {
         var data = $(this);
-        //title is first child of header
-        // title = data.children().first().text();
-        console.log("name");
-        title = data.text();
-        console.log(title);
-        // release = data.children().last().children().text();
-        json.title = title;
-        // json.release = release;
+        region = data.text();
+        states.push(region);
       })
       $('.postal-code').each(function() {
         var data = $(this);
-        //title is first child of header
-        // title = data.children().first().text();
-        console.log("name");
-        title = data.text();
-        console.log(title);
-        // release = data.children().last().children().text();
-        json.title = title;
-        // json.release = release;
+        zip_code = data.text();
+        zip_codes.push(zip_code);
       })
+      for (var i=0; i< prices.length; i++) {
+        console.log(prices[i] + " at " + station_names[i]);
+        console.log(street_addresses[i]);
+        console.log(cities[i] + states[i] + " " + zip_codes[i]);
+      }
 
     }
   })
