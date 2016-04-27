@@ -73,7 +73,15 @@ app.get('/scrape/:city/:state/:zip', function(req, res){
         console.log(prices[i] + " at " + station_names[i]);
         console.log(street_addresses[i]);
         console.log(cities[i] + states[i] + " " + zip_codes[i]);
+        price = prices[i];
+        name = station_names[i];
+        address = street_addresses[i] + " " + cities[i] + states[i] + " " + zip_codes[i];
+        json.stations.push({"name": name, "price": price, "address": address});
       }
+      console.log(json);
+      fs.writeFile('output.json', JSON.stringify(json, null, 4), function(err){
+        console.log('File successfully written! - Check your project directory for the output.json file');
+      })
 
     }
   })
