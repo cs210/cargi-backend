@@ -16,7 +16,7 @@ table.dynamicSchema = false;
 // Seed data into the table
 table.seed = [
     { id: "1", user_id: "1", longitude: -122.164089, latitude: 37.425421, datetime: "2016-04-02T11:00:00+00:00", event_name: "A"},
-    { id: "2", user_id: "1", longitude: -122.165309, latitude: 37.425575, datetime: "2016-04-09T11:30:00+00:00", event_name: "b"},
+    { id: "2", user_id: "1", longitude: -122.165309, latitude: 37.425575, datetime: "2016-04-28T09:30:00+00:00", event_name: "b"},
     { id: "3", user_id: "1", longitude: -122.164089, latitude: 37.425421, datetime: "2016-04-16T11:30:00+00:00", event_name: "C"},
     { id: "4", user_id: "1", longitude: -122.164089, latitude: 37.425421, datetime: "2016-04-11T11:30:00+00:00", event_name: "E"},
     { id: "5", user_id: "1", longitude: -122.164089, latitude: 37.425421, datetime: "2016-04-12T11:30:00+00:00", event_name: "F"},

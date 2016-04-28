@@ -12,7 +12,7 @@ table.dynamicSchema = false;
 
 // Seed data into the table
 table.seed = [
-    {id: "1", phone_number: "5107663419", device_id: "F35C076A-EB8D-45F0-A968-50D23BA209F9"},
+    {id: "1", phone_number: "1234567890", device_id: "F35C076A-EB8D-45F0-A968-50D23BA209F9"},
     {id: "2", phone_number: "5107663420", device_id: "F35C076A-EB8D-45F0-A968-50D23BA219F9"},
     {id: "3", phone_number: "5107663422", device_id: "F35C076A-EB8D-45F0-A968-50D23BA229F9"},
     {id: "4", phone_number: "5107663423", device_id: "F35C076A-EB8D-45F0-A968-50D23BA239F9"},
