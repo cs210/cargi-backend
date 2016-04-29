@@ -20,15 +20,14 @@ Many tools in our lives are personalized, and we should expect the same things f
 
 # Instruction for using the gas price api:
 
-Go to https://gas-price-api.herokuapp.com/scrape/
+* Go to https://gas-price-api.herokuapp.com/stations/[zipcode]
+* Where [zipcode] is the 5 digit zipcode for the area you want to get gas info for. 
+* Example: https://gas-price-api.herokuapp.com/94305
+* You will get a json object with the name of each station, the price, and its address
+* The github for the gas api is at https://github.com/mayanb/gaspriceapi
+* 
 
-Then add the [city]/[state]/[zipcode] to get gas info for that area.
 
-Example: https://gas-price-api.herokuapp.com/scrape/redmond/wa/98052
-
-For a city with two words (Palo Alto) use a + between the two words (palo+alto)
-
-You will get a json object with the name of each station, the price, and its address
 
 # Instructions for using the filterContacts API:
 
