@@ -22,9 +22,9 @@ function checkForDuplicates(results, firstName, lastName, phoneNumber) {
 var api = {
     get: function(request, response, next) {
         var query = {
-         sql: 'SELECT id from Users where phone_number=@phone_number',
+         sql: 'SELECT id from Users where device_id=@device_id',
             parameters: [
-                { name: 'phone_number', value: request.query.phone_number }
+                { name: 'device_id', value: request.query.device_id }
             ]
         };
         request.azureMobile.data.execute(query)
