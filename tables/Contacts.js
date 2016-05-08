@@ -17,7 +17,8 @@ table.seed = [
     { id: "4", user_id: "1", name: "Tara Balakrishnan"},
     { id: "5", user_id: "1", name: "Ishita Prasad"},
     { id: "6", user_id: "1", name: "Emily Tang"},
-    { id: "7", user_id: "2", name: "Kartik Sawhney"}
+    { id: "7", user_id: "1", name: "Vivek Choksi"},
+    { id: "8", user_id: "9", name: "Kartik Sawhney"}
 ];
 
 module.exports = table;

@@ -36,14 +36,14 @@ var api = {
                 };
                 request.azureMobile.data.execute(query3)
                 .then(function(results) {
-                    var query4 = {sql: 'SELECT c.name as name, u.id as user_id from Contacts c, Users u where u.id = @user_id and c.phone_number = u.phone_number',
+                    var query4 = {sql: 'SELECT c.name as name, u.id as user_id from Contacts c, Users u where u.id = @user_id and c.name = u.name',
                         parameters: [
                             { name: 'user_id', value: results[0]["user_id"]}
                         ]
                     };
                     request.azureMobile.data.execute(query4)
                     .then(function(results) {
-                        response.send({result: results});
+                        response.send(results);
                     });
                 });
             });
