@@ -6,7 +6,7 @@
 
 var api = {
     get: function(request, response, next) {
-        var query = {sql: 'SELECT DISTINCT name,email,count(name) from Users'
+        var query = {sql: 'SELECT DISTINCT name,email from users'
         };
         request.azureMobile.data.execute(query)
         .then(function(results) {
