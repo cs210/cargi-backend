@@ -2,7 +2,7 @@ import urllib2
 import json
 import random
 
-url = 'http://cargi.azurewebsites.net/tables/users'
+url = 'http://cargi.azurewebsites.net/api/allUsers'
 response = urllib2.urlopen(url).read()
 jsonresponse = json.loads(response)
 
@@ -12,8 +12,8 @@ for obj in jsonresponse:
   email = obj["email"]
   if name not in users:
     users[name] = email
-
-winners = random.sample(users, 5)
+# print(len(users))
+winners = random.sample(users, 1)
 
 print(winners)
 for name in winners:
