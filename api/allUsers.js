@@ -6,7 +6,7 @@
 
 var api = {
     get: function(request, response, next) {
-        var query = {sql: 'SELECT u.name as name, u.email as email, a.action as action, a.__createdAt as actionTime, l.start_datetime as startTime, l.end_datetime as endTime, l.duration as duration from users u, actions_taken a, log l where u.id=a.user_id and u.id=l.user_id'
+        var query = {sql: 'SELECT u.name as name, u.email as email, a.action as action, l.start_datetime as startTime, l.end_datetime as endTime, l.duration as duration from users u, actions_taken a, log l where u.id=a.user_id and u.id=l.user_id'
         };
         request.azureMobile.data.execute(query)
         .then(function(results) {
