@@ -21,15 +21,16 @@ function checkForDuplicates(results, name) {
 
 var api = {
     get: function(request, response, next) {
-        var query = {sql: 'SELECT id from Users where device_id=@device_id',
+        var query = {sql: 'SELECT id from users where email=@email and name=@name',
             parameters: [
-                { name: 'device_id', value: request.query.device_id }
+                { name: 'email', value: request.query.email },
+                { name: 'name', value: request.query.name }
             ]
         };
         request.azureMobile.data.execute(query)
         .then(function(results) {
             var user_id = results[0]["id"];
-            var query2 = {sql: 'SELECT DISTINCT c.name as name, "event" as type from Contacts c, Event_history e, Event_contacts ec where e.user_id = @user_id and e.id = ec.event_id and c.id = ec.contact_id and julianday(e.datetime)-julianday(CURRENT_TIMESTAMP) <= 1 and julianday(e.datetime)-julianday(CURRENT_TIMESTAMP) >= 0 order by e.datetime LIMIT 6',
+            var query2 = {sql: 'SELECT DISTINCT c.name as name, "event" as type from contacts c, event_history e, event_contacts ec where e.user_id = @user_id and e.id = ec.event_id and c.id = ec.contact_id and julianday(e.datetime)-julianday(CURRENT_TIMESTAMP) <= 1 and julianday(e.datetime)-julianday(CURRENT_TIMESTAMP) >= 0 order by e.datetime LIMIT 6',
                 parameters: [
                     { name: 'user_id', value: user_id }
                 ]
@@ -39,7 +40,7 @@ var api = {
             .then(function(results) {
                 var tempArray = []
                 tempArray = results
-                var query3 = {sql: 'SELECT DISTINCT c.name as name, "frequent" as type, count(ec.contact_id) as counter FROM Contacts c, Event_history e, Event_contacts ec where e.user_id = @user_id and e.id = ec.event_id and c.id = ec.contact_id and julianday(CURRENT_TIMESTAMP)-julianday(e.datetime) <= 30 group by ec.contact_id order by count(ec.contact_id) desc limit 6',
+                var query3 = {sql: 'SELECT DISTINCT c.name as name, "frequent" as type, count(ec.contact_id) as counter FROM contacts c, event_history e, event_contacts ec where e.user_id = @user_id and e.id = ec.event_id and c.id = ec.contact_id and julianday(CURRENT_TIMESTAMP)-julianday(e.datetime) <= 30 group by ec.contact_id order by count(ec.contact_id) desc limit 6',
                     parameters: [
                     {     name: 'user_id', value: user_id }
                     ]
