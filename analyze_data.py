@@ -19,14 +19,29 @@ def keyboard(banner=None):
         return
 team_cargi = ['parkedwin@yahoo.com', 'emjtang@stanford.edu', 'ish@cargi.co', 'manning_brady@lycos.com', 'taragb@gmail.com', 'emily@cargi.co', 'mayanb@stanford.edu', 'mayanb@gmail.com']
 
-# action_url = 'http://cargi.azurewebsites.net/api/actionInfo'
-action_url = 'http://cargi.azurewebsites.net/api/getActionsTaken'
+action_url = 'http://cargi.azurewebsites.net/api/actionInfo'
+# action_url = 'http://cargi.azurewebsites.net/api/getActionsTaken'
 # actionInfo
 # logInfo
 # define constants for action types
 def getAllUsers():
   print 'Getting total number of users'
-  url = 'http://cargi.azurewebsites.net/api/getUsers'
+  url = 'http://cargi.azurewebsites.net/api/getUserIds'
+  response = urllib2.urlopen(url).read()
+  jsonresponse = json.loads(response)
+
+  users = dict()
+  for obj in jsonresponse:
+    user_id = obj["id"]
+    name = obj["name"]
+    email = obj["email"]
+    if user_id not in users:
+      users[user_id] = tuple(name, email)
+  return users
+
+def getNumUsers():
+  print 'Getting total number of users'
+  url = 'http://cargi.azurewebsites.net/api/allUsers'
   response = urllib2.urlopen(url).read()
   jsonresponse = json.loads(response)
 
@@ -37,8 +52,7 @@ def getAllUsers():
     email = obj["email"]
     if user_id not in users:
       users[user_id] = tuple(name, email)
-  return users
-
+  return users  
 # def getAllActions():
   # print 'Getting all actions taken'
   # url = 'http://cargi.azurewebsites.net/api/getActionsTaken'
@@ -52,11 +66,10 @@ def main():
   jsonresponse = json.loads(response)
   user_actions = dict()
   action_counts = dict()
-  users = getAllUsers()
-
-  keyboard()
+  # users = getAllUsers()
+  
   for obj in jsonresponse:
-    user_id = obj['user_id']
+    email = obj['email']
     action = obj['action']
 
     if email in team_cargi: 
@@ -72,23 +85,6 @@ def main():
       actions_list = list()
     actions_list.append(action)
     user_actions[email] = actions_list
-  # for obj in jsonresponse:
-  #   email = obj['email']
-  #   action = obj['action']
-
-  #   if email in team_cargi: 
-  #     continue
-  #   if action in action_counts:
-  #     action_counts[action] += 1
-  #   else:
-  #     action_counts[action] = 1
-
-  #   if email in user_actions:
-  #     actions_list = user_actions[email]
-  #   else:
-  #     actions_list = list()
-  #   actions_list.append(action)
-  #   user_actions[email] = actions_list
 
   # print(user_actions)
 
@@ -99,7 +95,7 @@ def main():
   print("total users who have performed an action:", len(user_actions))
   print("total # actions:", total_len)
   print("total users:", totalNumUsers)
-  # keyboard()
+  keyboard()
 
 if __name__ == '__main__':
   main()
