@@ -29,7 +29,7 @@ var api = {
         request.azureMobile.data.execute(query)
         .then(function(results) {
             var user_id = results[0]["id"];
-            var query2 = {sql: 'SELECT DISTINCT c.name as name, count(ec.contact_id) as counter FROM contacts c, event_history e, event_contacts ec where e.user_id = @user_id and e.id = ec.event_id and c.id = ec.contact_id group by ec.contact_id order by count(ec.contact_id) desc',
+            var query2 = {sql: 'SELECT DISTINCT c.name as name, count(ec.contact_id) as counter FROM contacts c, event_history e, event_contacts ec group by ec.contact_id order by count(ec.contact_id) desc',
             parameters: [
                 {     name: 'user_id', value: user_id }
             ]
