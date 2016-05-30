@@ -21,7 +21,7 @@ function checkForDuplicates(results, name) {
 
 var api = {
     get: function(request, response, next) {
-        var query = {sql: 'SELECT DISTINCT e.user_id as userid, c.name as name, ec.contact_id as cid, c.id as cid1 FROM contacts c, event_history e, event_contacts ec where (CHARINDEX(e.id, ec.event_id) > 0 or CHARINDEX(ec.event_id, e.id) > 0) and (CHARINDEX(c.id, ec.contact_id) > 0 or CHARINDEX(ec.contact_id, c.id) > 0)'
+        var query = {sql: "SELECT DISTINCT e.user_id as userid, c.name as name, ec.contact_id as cid, c.id as cid1 FROM contacts c, event_history e, event_contacts ec where (e.id LIKE '%' + ec.event_id + '%' or ec.event_id LIKE '%' + e.id + '%') and (c.id LIKE '%' + ec.contact_id + '%' or ec.contact_id LIKE '%' + c.id + '%')"
             };
         request.azureMobile.data.execute(query)
         .then(function(results) {
