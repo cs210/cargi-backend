@@ -40,7 +40,7 @@ var api = {
             .then(function(results) {
                 var tempArray = []
                 tempArray = results
-                var query3 = {sql: 'SELECT DISTINCT c.name as name, "frequent" as type, count(ec.contact_id) as counter FROM contacts c, event_history e, event_contacts ec where e.user_id = @user_id and e.id = ec.event_id and c.id = ec.contact_id and julianday(CURRENT_TIMESTAMP)-julianday(e.datetime) <= 30 group by ec.contact_id order by count(ec.contact_id) desc limit 6',
+                var query3 = {sql: 'SELECT DISTINCT c.name as name, "frequent" as type, count(ec.contact_id) as counter FROM contacts c, event_history e, event_contacts ec where e.user_id = @user_id and e.id = ec.event_id and c.id = ec.contact_id and julianday(CURRENT_TIMESTAMP)-julianday(e.datetime) <= 30 group by ec.contact_id order by count(ec.contact_id) desc',
                     parameters: [
                     {     name: 'user_id', value: user_id }
                     ]
