@@ -49,7 +49,7 @@ var api = {
                 .then(function(results) {
                     var tempArray2 = []
                     tempArray2 = results
-                    var query4 = {sql: 'SELECT DISTINCT c.name as name, "recent" as type FROM Contacts c, Communication_history ch where ch.user_id = @user_id and c.id = ch.contact_id ORDER BY ch.createdAt DESC LIMIT 6',
+                    var query4 = {sql: 'SELECT DISTINCT c.name as name, "recent" as type FROM contacts c, communication_history ch where ch.user_id = @user_id and c.id = ch.contact_id ORDER BY ch.createdAt DESC LIMIT 6',
                         parameters: [
                         {     name: 'user_id', value: user_id }
                         ]
@@ -58,7 +58,7 @@ var api = {
                     .then(function(results) {
                         var tempArray3 = []
                         tempArray3 = results
-                        var query5 = {sql: 'SELECT DISTINCT c.name as name, a.createdAt as date1, b.createdAt as date2, "timely" as ttype FROM Contacts c, Communication_history a, Communication_history b WHERE a.user_id = @user_id and b.user_id = @user_id and c.id = a.contact_id and c.id = b.contact_id and julianday(date2)-julianday(date1) >= 0.97 and julianday(date2)-julianday(date1) <= 1.021 and julianday(CURRENT_TIMESTAMP)-julianday(date2) >= 0.97 and julianday(CURRENT_TIMESTAMP)-julianday(date2) <= 1.021 UNION SELECT c.name as name, a.createdAt as date1, b.createdAt as date2, "timely" as type FROM Contacts c, Communication_history a, Communication_history b WHERE a.user_id = @user_id and b.user_id = @user_id and c.id = a.contact_id and c.id = b.contact_id and julianday(date2)-julianday(date1) >= 6.97 and julianday(date2)-julianday(date1) <= 7.021 and julianday(CURRENT_TIMESTAMP)-julianday(date2) >= 6.97 and julianday(CURRENT_TIMESTAMP)-julianday(date2) <= 7.021',
+                        var query5 = {sql: 'SELECT DISTINCT c.name as name, a.createdAt as date1, b.createdAt as date2, "timely" as ttype FROM contacts c, communication_history a, communication_history b WHERE a.user_id = @user_id and b.user_id = @user_id and c.id = a.contact_id and c.id = b.contact_id and julianday(date2)-julianday(date1) >= 0.97 and julianday(date2)-julianday(date1) <= 1.021 and julianday(CURRENT_TIMESTAMP)-julianday(date2) >= 0.97 and julianday(CURRENT_TIMESTAMP)-julianday(date2) <= 1.021 UNION SELECT c.name as name, a.createdAt as date1, b.createdAt as date2, "timely" as type FROM contacts c, communication_history a, communication_history b WHERE a.user_id = @user_id and b.user_id = @user_id and c.id = a.contact_id and c.id = b.contact_id and julianday(date2)-julianday(date1) >= 6.97 and julianday(date2)-julianday(date1) <= 7.021 and julianday(CURRENT_TIMESTAMP)-julianday(date2) >= 6.97 and julianday(CURRENT_TIMESTAMP)-julianday(date2) <= 7.021',
                             parameters: [
                             {     name: 'user_id', value: user_id }
                             ]
