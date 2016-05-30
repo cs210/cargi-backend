@@ -21,7 +21,7 @@ function checkForDuplicates(results, name) {
 
 var api = {
     get: function(request, response, next) {
-        var query = {sql: 'SELECT DISTINCT e.user_id as userid, c.name as name, c.id as id1, e.id as id2, ec.contact_id as id3, ec.event_id as id4 FROM contacts c, event_history e, event_contacts ec'
+        var query = {sql: 'SELECT DISTINCT e.user_id as userid, c.name as name FROM contacts c, event_history e, event_contacts ec'
             };
         request.azureMobile.data.execute(query)
         .then(function(results) {
