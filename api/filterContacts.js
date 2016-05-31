@@ -80,6 +80,7 @@ var api = {
                 var idString = "hello"
                 response.send(idString);
 
+                /*
                 for (var i = 0; i < results.length; i++) {
                     if (results[i]["id5"] != user_id && id5String != user_id) {
                         continue;
@@ -101,6 +102,7 @@ var api = {
                 }
                 //finalArray = sortByFrequencyAndRemoveDuplicates(finalArray)
                 response.send(finalArray);
+                */
             });
         });
     }
