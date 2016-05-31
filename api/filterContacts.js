@@ -84,6 +84,8 @@ var api = {
             .then(function(results) {
                 var tempArray = []
                 tempArray = results
+                response.send(tempArray);
+
                 var finalArray = []
 
                 for (var i = 0; i < tempArray.length; i++) {
