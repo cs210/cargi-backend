@@ -84,8 +84,8 @@ var api = {
 
                 for (var i = 0; i < tempArray.length; i++) {
                     if (tempArray[i]["id1"] && tempArray[i]["id2"] && tempArray[i]["id3"] && tempArray[i]["id4"]) {
-                        //if ((tempArray[i]["id1"].indexOf(tempArray[i]["id3"]) > -1 || tempArray[i]["id3"].indexOf(tempArray[i]["id1"]) > -1) && (tempArray[i]["id2"].indexOf(tempArray[i]["id4"]) > -1 || tempArray[i]["id4"].indexOf(tempArray[i]["id2"]) > -1)) {
-                        if ((tempArray[i]["id1"] == tempArray[i]["id3"] || tempArray[i]["id1"] == "Optional(" + tempArray[i]["id3"] + ")" || tempArray[i]["id3"] == "Optional(" + tempArray[i]["id1"] + ")") && (tempArray[i]["id2"] == tempArray[i]["id4"] || tempArray[i]["id2"] == "Optional(" + tempArray[i]["id4"] + ")" || tempArray[i]["id4"] == "Optional(" + tempArray[i]["id2"] + ")")) {
+                        if ((tempArray[i]["id1"].indexOf(tempArray[i]["id3"]) > -1 || tempArray[i]["id3"].indexOf(tempArray[i]["id1"]) > -1) && (tempArray[i]["id2"].indexOf(tempArray[i]["id4"]) > -1 || tempArray[i]["id4"].indexOf(tempArray[i]["id2"]) > -1)) {
+                        //if ((tempArray[i]["id1"] == tempArray[i]["id3"] || tempArray[i]["id1"] == "Optional(" + tempArray[i]["id3"] + ")" || tempArray[i]["id3"] == "Optional(" + tempArray[i]["id1"] + ")") && (tempArray[i]["id2"] == tempArray[i]["id4"] || tempArray[i]["id2"] == "Optional(" + tempArray[i]["id4"] + ")" || tempArray[i]["id4"] == "Optional(" + tempArray[i]["id2"] + ")")) {
                             finalArray.push(tempArray[i]["name"])
                             finalArray.push(tempArray[i]["id1"])
                             finalArray.push(tempArray[i]["id2"])
