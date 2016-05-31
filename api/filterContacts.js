@@ -79,7 +79,7 @@ var api = {
                 var finalArray = []
 
                 for (var i = 0; i < results.length; i++) {
-                    var id5String = concat("Optional(", results[i]["id5"], ")");
+                    var id5String = concat("Optional(", String(results[i]["id5"]), ")");
                     response.send(id5String)
                     if (results[i]["id5"] != user_id && id5String != user_id) {
                         continue;
