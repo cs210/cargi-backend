@@ -86,6 +86,7 @@ var api = {
                 tempArray = results
                 response.send(tempArray);
 
+                /*
                 var finalArray = []
 
                 for (var i = 0; i < tempArray.length; i++) {
@@ -102,6 +103,7 @@ var api = {
                 }
                 //finalArray = sortByFrequencyAndRemoveDuplicates(finalArray)
                 response.send(finalArray);
+                */
             });
         });
     }
