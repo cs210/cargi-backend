@@ -52,9 +52,6 @@ function sortByFrequencyAndRemoveDuplicates(array) {
     return uniques.sort(compareFrequency);
 }
 
-
- 
-
 /*
 *This function uses an SQL query to get the desired information. 
 * We first query for any contacts that the person has an event that day, followed by 
@@ -75,6 +72,7 @@ var api = {
             }
 
             var user_id = results[0]["id"];
+            response.send(user_id);
             var query2 = {sql: 'SELECT * FROM contacts c, event_history e, event_contacts ec'
             };
             request.azureMobile.data.execute(query2)
