@@ -76,28 +76,30 @@ var api = {
             };
             request.azureMobile.data.execute(query2)
             .then(function(results) {
-                var tempArray = []
-                tempArray = results
-                response.send(results);
-
-                /*
                 var finalArray = []
 
-                for (var i = 0; i < tempArray.length; i++) {
-                    if (tempArray[i]["id1"] && tempArray[i]["id2"] && tempArray[i]["id3"] && tempArray[i]["id4"]) {
-                        if ((tempArray[i]["id1"].indexOf(tempArray[i]["id3"]) > -1 || tempArray[i]["id3"].indexOf(tempArray[i]["id1"]) > -1) && (tempArray[i]["id2"].indexOf(tempArray[i]["id4"]) > -1 || tempArray[i]["id4"].indexOf(tempArray[i]["id2"]) > -1)) {
-                        //if ((tempArray[i]["id1"] == tempArray[i]["id3"] || tempArray[i]["id1"] == "Optional(" + tempArray[i]["id3"] + ")" || tempArray[i]["id3"] == "Optional(" + tempArray[i]["id1"] + ")") && (tempArray[i]["id2"] == tempArray[i]["id4"] || tempArray[i]["id2"] == "Optional(" + tempArray[i]["id4"] + ")" || tempArray[i]["id4"] == "Optional(" + tempArray[i]["id2"] + ")")) {
-                            finalArray.push(tempArray[i]["name"])
-                            finalArray.push(tempArray[i]["id1"])
-                            finalArray.push(tempArray[i]["id2"])
-                            finalArray.push(tempArray[i]["id3"])
-                            finalArray.push(tempArray[i]["id4"])
+                for (var i = 0; i < results.length; i++) {
+                    var id5String = "Optional(" + results[i]["id5"] + ")";
+                    if (results[i]["id5"] != user_id && id5String != user_id) {
+                        continue;
+                    }
+                    if (results[i]["id1"] && results[i]["id2"] && results[i]["id3"] && results[i]["id4"]) {
+                        var id1String = "Optional(" + results[i]["id1"] + ")";
+                        var id2String = "Optional(" + results[i]["id2"] + ")";
+                        var id3String = "Optional(" + results[i]["id3"] + ")";
+                        var id4String = "Optional(" + results[i]["id4"] + ")";
+                        //if ((results[i]["id1"].indexOf(results[i]["id3"]) > -1 || results[i]["id3"].indexOf(results[i]["id1"]) > -1) && (results[i]["id2"].indexOf(results[i]["id4"]) > -1 || results[i]["id4"].indexOf(results[i]["id2"]) > -1)) {
+                        if ((results[i]["id1"] == results[i]["id3"] || results[i]["id1"] == id3String || results[i]["id3"] == id1String) && (results[i]["id2"] == results[i]["id4"] || results[i]["id2"] == id4String || results[i]["id4"] == id2String)) {
+                            finalArray.push(results[i]["name"])
+                            finalArray.push(results[i]["id1"])
+                            finalArray.push(results[i]["id2"])
+                            finalArray.push(results[i]["id3"])
+                            finalArray.push(results[i]["id4"])
                         }
                     }
                 }
                 //finalArray = sortByFrequencyAndRemoveDuplicates(finalArray)
                 response.send(finalArray);
-                */
             });
         });
     }
