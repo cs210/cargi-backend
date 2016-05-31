@@ -79,7 +79,7 @@ var api = {
                 var finalArray = []
 
                 for (var i = 0; i < results.length; i++) {
-                    var id5String = "Optional(" + ")";
+                    var id5String = "hello"
                     response.send(id5String);
                     if (results[i]["id5"] != user_id && id5String != user_id) {
                         continue;
