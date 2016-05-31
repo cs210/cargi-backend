@@ -71,7 +71,7 @@ var api = {
         request.azureMobile.data.execute(query)
         .then(function(results) {
             var user_id = results[0]["id"];
-            var query2 = {sql: 'SELECT DISTINCT c.name as name, ec.contact_id as cid FROM contacts c, event_history e, event_contacts ec where e.user_id = @user_id',
+            var query2 = {sql: 'SELECT DISTINCT c.name as name, c.id as id1, e.id as id2, ec.contact_id as id3, ec.event_id as id4 FROM contacts c, event_history e, event_contacts ec where e.user_id = @user_id',
             parameters: [
                 {     name: 'user_id', value: user_id }
             ]
@@ -83,12 +83,19 @@ var api = {
                 var finalArray = []
 
                 for (var i = 0; i < tempArray.length; i++) {
-                    finalArray.push(tempArray[i]["name"])
+                    if (tempArray[i]["id1"] && tempArray[i]["id2"] && tempArray[i]["id3"] && tempArray[i]["id4"]) {
+                        //if ((tempArray[i]["id1"].indexOf(tempArray[i]["id3"]) > -1 || tempArray[i]["id3"].indexOf(tempArray[i]["id1"]) > -1) && (tempArray[i]["id2"].indexOf(tempArray[i]["id4"]) > -1 || tempArray[i]["id4"].indexOf(tempArray[i]["id2"]) > -1)) {
+                        if ((tempArray[i]["id1"] == tempArray[i]["id3"] || tempArray[i]["id1"] == "Optional(" + tempArray[i]["id3"] + ")" || tempArray[i]["id3"] == "Optional(" + tempArray[i]["id1"] + ")") && (tempArray[i]["id2"] == tempArray[i]["id4"] || tempArray[i]["id2"] == "Optional(" + tempArray[i]["id4"] + ")" || tempArray[i]["id4"] == "Optional(" + tempArray[i]["id2"] + ")")) {
+                            finalArray.push(tempArray[i]["name"])
+                            finalArray.push(tempArray[i]["id1"])
+                            finalArray.push(tempArray[i]["id2"])
+                            finalArray.push(tempArray[i]["id3"])
+                            finalArray.push(tempArray[i]["id4"])
+                        }
+                    }
                 }
-                finalArray = sortByFrequencyAndRemoveDuplicates(finalArray)
-                if (request.query.type == "frequent") {
-                    response.send(finalArray);
-                }
+                //finalArray = sortByFrequencyAndRemoveDuplicates(finalArray)
+                response.send(finalArray);
             });
         });
     }
