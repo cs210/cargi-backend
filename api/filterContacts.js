@@ -77,7 +77,7 @@ var api = {
             request.azureMobile.data.execute(query2)
             .then(function(results) {
                 var finalArray = []
-                response.send("hello");
+                response.send(results);
 
                 /*
                 for (var i = 0; i < results.length; i++) {
