@@ -68,7 +68,10 @@ var api = {
         request.azureMobile.data.execute(query)
         .then(function(results) {
             if (results.length == 0) {
-                response.send("email does not exist");
+            var str1 = "Email"
+            var str2 = " does not exist"
+            str1 = str1 + str2;
+            response.send(str1);
             }
 
             var user_id = results[0]["id"]
