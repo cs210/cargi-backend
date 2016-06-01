@@ -72,7 +72,7 @@ var api = {
             }
 
             var user_id = results[0]["id"];
-            var query2 = {sql: 'SELECT * FROM contacts, event_history, event_contacts'
+            var query2 = {sql: 'SELECT * FROM contacts'
             };
             request.azureMobile.data.execute(query2)
             .then(function(results) {
