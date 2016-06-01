@@ -77,9 +77,13 @@ var api = {
             request.azureMobile.data.execute(query2)
             .then(function(results) {
                 var finalArray = []
+                var id5String = "Optional(" + results[0]["id5"] + ")"
+                response.send(id5String);
+
 
                 for (var i = 0; i < results.length; i++) {
                     var id5String = "Optional(" + results[i]["id5"] + ")"
+
                     if (results[i]["id5"] != user_id && id5String != user_id) {
                         continue;
                     }
