@@ -77,8 +77,7 @@ var api = {
             request.azureMobile.data.execute(query2)
             .then(function(results) {
                 var finalArray = []
-                var id5String = "Optional(" + results[0]["id5"] + ")"
-                response.send(id5String);
+                response.send(results[0]["id5"]);
 
 
                 for (var i = 0; i < results.length; i++) {
