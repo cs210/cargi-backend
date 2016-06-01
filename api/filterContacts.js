@@ -71,7 +71,7 @@ var api = {
             response.send(Email does not exist);
             }
             var user_id = results[0]["id"]
-            response.send(typeof user_id)
+            response.send(String(user_id))
 
             var query2 = {sql: "SELECT c.name as name, c.id as id1, e.id as id2, ec.contact_id as id3, ec.event_id as id4, e.user_id as id5 FROM contacts c, event_history e, event_contacts ec where e.user_id = @user_id",
             parameters: [
