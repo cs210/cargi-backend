@@ -77,9 +77,9 @@ var api = {
             request.azureMobile.data.execute(query2)
             .then(function(results) {
                 var finalArray = []
-                response.send(results[0]["id5"]);
+                response.send(results);
 
-
+                /*
                 for (var i = 0; i < results.length; i++) {
                     var id5String = "Optional(" + results[i]["id5"] + ")"
 
@@ -103,6 +103,7 @@ var api = {
                 }
                 //finalArray = sortByFrequencyAndRemoveDuplicates(finalArray)
                 response.send(finalArray);
+                */
             });
         });
     }
