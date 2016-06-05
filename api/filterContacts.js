@@ -72,12 +72,8 @@ var api = {
             }
 
             var user_id = results[0]["id"]
-            var wildcard = "%"
-            wildcard = wildcard + user_id
-            response.send(wildcard);
 
-
-            var query2 = {sql: "SELECT c.name as name, c.id as id1, e.id as id2, ec.contact_id as id3, ec.event_id as id4, e.user_id as id5 FROM contacts c, event_history e, event_contacts ec where e.user_id LIKE CONCAT('%', @user_id, '%')",
+            var query2 = {sql: "SELECT c.name as name, c.id as id1, e.id as id2, ec.contact_id as id3, ec.event_id as id4, e.user_id as id5, 'filter' + e.user_id as id6 FROM contacts c, event_history e, event_contacts ec where e.user_id = @user_id)",
             parameters: [
                 { name: 'user_id', value: user_id}
             ]
