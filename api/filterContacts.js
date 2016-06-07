@@ -68,19 +68,25 @@ var api = {
         request.azureMobile.data.execute(query)
         .then(function(results) {
             if (results.length == 0) {
-                response.send("email does not exist");
+            response.send("Email does not exist");
             }
 
-            var user_id = results[0]["id"];
-            var query2 = {sql: 'SELECT c.name as name, c.id as id1, e.id as id2, ec.contact_id as id3, ec.event_id as id4, e.user_id as id5 FROM contacts c, event_history e, event_contacts ec'
+            var user_id = results[0]["id"]
+
+            var query2 = {sql: 'SELECT c.name as name, c.id as id1, e.id as id2, ec.contact_id as id3, ec.event_id as id4, e.user_id as id5, "filter" as id6 FROM contacts c, event_history e, event_contacts ec where e.user_id = @user_id)',
+            parameters: [
+                { name: 'user_id', value: user_id}
+            ]
             };
             request.azureMobile.data.execute(query2)
             .then(function(results) {
                 var finalArray = []
-                response.send("hello");
+                response.send(results);
 
                 /*
                 for (var i = 0; i < results.length; i++) {
+                    var id5String = "Optional(" + results[i]["id5"] + ")"
+
                     if (results[i]["id5"] != user_id && id5String != user_id) {
                         continue;
                     }
