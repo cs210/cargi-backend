@@ -4,6 +4,8 @@ import random
 import sys, code
 import datetime as dt
 import pickle
+from dateutil.parser import parse
+import csv
 def keyboard(banner=None):
     ''' Function that mimics the matlab keyboard command '''
     # use exception trick to pick up the current frame
@@ -19,7 +21,8 @@ def keyboard(banner=None):
         code.interact(banner=banner, local=namespace)
     except SystemExit:
         return
-team_cargi = ['parkedwin@yahoo.com', 'emjtang@stanford.edu', 'ish@cargi.co', 'manning_brady@lycos.com', 'taragb@gmail.com', 'emily@cargi.co', 'mayanb@gmail.com']
+team_cargi = ['parkedwin@yahoo.com', 'emjtang@stanford.edu', 'ish@cargi.co', 'manning_brady@lycos.com', 'taragb@gmail.com', 'taragb@cs.stanford.edu',
+'edpark@stanford.edu', 'edwinpark@stanford.edu','taragb@stanford.edu', 'kartiks2@stanford.edu', 'emily@cargi.co', 'mayanb@gmail.com']
 team_cargi_ids = []
 # action_url = 'http://cargi.azurewebsites.net/api/actionInfo'
 action_url = 'http://cargi.azurewebsites.net/api/getActionsTaken'
@@ -27,33 +30,117 @@ action_url = 'http://cargi.azurewebsites.net/api/getActionsTaken'
 # actionInfo
 # logInfo
 # define constants for action types
-def getAllUsers():
+def writeDatabaseToFile(objectName, object):
+  print 'saving data for', objectName
+  now = dt.datetime.now()
+  today = now.strftime("%Y-%m-%d")
+  filename = today + "." + objectName
+  pickle.dump(object, open(filename, 'wb'))
+
+def writeDataToCSV(fields):
+  with open('data.csv', 'w') as csvfile:
+    fieldnames = ['first_name', 'last_name']
+    writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+    writer.writeheader()
+    writer.writerow({'first_name': 'Baked', 'last_name': 'Beans'})
+
+def analyzeFacebookAdsUser():
+  uniqueEmails = []
   print 'getting all users'
   url = 'http://cargi.azurewebsites.net/api/allUsers'
   response = urllib2.urlopen(url).read()
   user_json = json.loads(response)
   now = dt.datetime.now()
-  today = now.strftime("%Y-%m-%d")
-  print today
-
-  filename = today + ".users"
-  print 'saving the users database'
-  # pickle.dump(user_json, open(filename, 'wb'))
+  fbDate = parse("2016-05-24").strftime("%Y-%m-%d") # when fb ads were released
+  numAds = 0
   users = dict()
   for obj in user_json:
     user_id = obj["id"]
     name = obj["name"]
     email = obj["email"]
-
+    createdAt = obj["createdAt"]
+    dateCreated = parse(createdAt).strftime("%Y-%m-%d")
     if email in team_cargi:
       team_cargi_ids.append(user_id)
       continue
-    if user_id not in users:
+    if email not in users.keys():
       users[email] = user_id
+      if fbDate < dateCreated:
+        numAds = numAds + 1
+      print email, name, dateCreated
+  print 'num new users after ads', numAds
+
+def getAllUsers():
+  uniqueEmails = []
+  print 'getting all users'
+  url = 'http://cargi.azurewebsites.net/api/allUsers'
+  response = urllib2.urlopen(url).read()
+  user_json = json.loads(response)
+  users = dict()
+  users_date = dict() # number of new users per day
+
+  for obj in user_json:
+    user_id = obj["id"]
+    name = obj["name"]
+    email = obj["email"]
+    createdAt = obj["createdAt"]
+    dateCreated = parse(createdAt).strftime("%Y-%m-%d")
+    if email in team_cargi:
+      team_cargi_ids.append(user_id)
+      continue
+    if email not in users.keys():
+      users[email] = user_id
+      if dateCreated in users_date:
+        users_date[dateCreated] += 1
+      else:
+        users_date[dateCreated] = 1
+      # print email, name, createdAt
+  print users_date
+  with open('usersPerDay.csv', 'w') as csvfile:
+    fieldnames = ['date', 'number of users']
+    writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+    writer.writeheader()
+    for date in users_date:
+      writer.writerow({'date': date, 'number of users': users_date[date]})
   return users
 
-def getNumUsers(users):
-   return len(users)
+def analyzeActions():
+  response = urllib2.urlopen(action_url).read()
+  jsonresponse = json.loads(response)
+  user_actions = dict()
+  action_counts = dict()
+  fbDate = parse("2016-05-24").strftime("%Y-%m-%d") # when fb ads were released
+  actions_date = dict() # num actions per date (to see if there is an increase in user engagement)
+
+  for obj in jsonresponse:
+    created_at = obj['createdAt']
+    user_id = obj['user_id']
+    action = obj['action']
+    createdAt = obj["createdAt"]
+    # dateCreated = parse(createdAt).strftime("%Y-%m-%d")
+    dateCreated = parse(createdAt).strftime("%Y-%m-%d")
+    if user_id in team_cargi_ids:
+      continue
+    if dateCreated in actions_date:
+      actions_date[dateCreated] += 1
+    else:
+      actions_date[dateCreated] = 1
+    if action in action_counts:
+      action_counts[action] += 1
+    else:
+      action_counts[action] = 1
+
+  print action_counts
+  print actions_date
+
+
+def writeActionsDateToFile(actions_date):
+  with open('actionsPerDay.csv', 'w') as csvfile:
+    fieldnames = ['date', 'number of actions']
+    writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+    writer.writeheader()
+    for date in actions_date:
+      writer.writerow({'date': date, 'number of actions': actions_date[date]})
 # def getAllActions():
 #   print 'Getting all actions taken'
 #   url = 'http://cargi.azurewebsites.net/api/getActionsTaken'
@@ -71,42 +158,35 @@ def getNumUsers(users):
 #   for obj in jsonresponse:
 #     print obj
 def main():
-  print 'api request'
 
   # analyzing users
   users = getAllUsers()
   print 'statistics'
-  print 'total number of users:', getNumUsers(users)
+  print 'total number of users:', len(users)
 
-  now = dt.datetime.now()
-  print now
+  analyzeFacebookAdsUser()
+
   # analyzing actions
-  response = urllib2.urlopen(action_url).read()
-  jsonresponse = json.loads(response)
-  now = dt.datetime.now()
-  today = now.strftime("%Y-%m-%d")
-  print today
+  analyzeActions()
+  # response = urllib2.urlopen(action_url).read()
+  # jsonresponse = json.loads(response)
+  # now = dt.datetime.now()
+  # today = now.strftime("%Y-%m-%d")
+  # print today
 
-  filename = today + ".useractions"
-  print 'saving user actions'
-  # pickle.dump(jsonresponse, open(filename, 'wb'))
-  user_actions = dict()
-  action_counts = dict()
-  # analyzeLogging()
-  # pickle.dump(team_cargi_ids, open('team_ids', 'wb'))
-  for team_id in team_cargi_ids:
-    print team_id
-  for obj in jsonresponse:
-    created_at = obj['createdAt']
-    print created_at
-    user_id = obj['user_id']
-    action = obj['action']
-    if user_id in team_cargi_ids:
-      continue
-    if action in action_counts:
-      action_counts[action] += 1
-    else:
-      action_counts[action] = 1
+  # filename = today + ".useractions"
+  # user_actions = dict()
+  # action_counts = dict()
+  # for obj in jsonresponse:
+  #   created_at = obj['createdAt']
+  #   user_id = obj['user_id']
+  #   action = obj['action']
+  #   if user_id in team_cargi_ids:
+  #     continue
+  #   if action in action_counts:
+  #     action_counts[action] += 1
+  #   else:
+  #     action_counts[action] = 1
 
     # if email in user_actions:
     #   actions_list = user_actions[email]
