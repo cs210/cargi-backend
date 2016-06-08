@@ -73,7 +73,7 @@ var api = {
 
             var user_id = results[0]["id"]
 
-            var query2 = {sql: 'SELECT name FROM contacts where c.user_id = @user_id',
+            var query2 = {sql: 'SELECT name FROM contacts where user_id = @user_id',
             parameters: [
                 { name: 'user_id', value: user_id }
             ]
