@@ -80,6 +80,8 @@ var api = {
             };
             request.azureMobile.data.execute(query2)
             .then(function(results) {
+                response.send(results);
+                /*
                 var finalArray = []
                 for (var i = 0; i < results.length; i++) {
                     if (results[i]["id1"] && results[i]["id2"] && results[i]["id3"] && results[i]["id4"]) {
@@ -92,6 +94,7 @@ var api = {
                     finalArray = sortByFrequencyAndRemoveDuplicates(finalArray)
                 }
                 response.send(response);
+                */
             });
         });
     }
