@@ -88,7 +88,9 @@ var api = {
                         }
                     }
                 }
-                finalArray = sortByFrequencyAndRemoveDuplicates(finalArray)
+                if (finalArray.length != 0) {
+                    finalArray = sortByFrequencyAndRemoveDuplicates(finalArray)
+                }
                 response.send(finalArray);
             });
         });
