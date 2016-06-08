@@ -2,6 +2,8 @@
 *The frequentLocation API
 * Created by Kartik Sawhney on 4/19/2016
 * Copyright © 2016 Cargi. All rights reserved.
+This has not been integrated in the current version of the app, but will be useful once we have more No. of users and more data to work with.
+This observes patterns in driving and then make recommendations, which in turn help make other features (such as gas) more effective.
 */
 
 //Gets the distance between a pair of geographic coordinates

@@ -2,6 +2,7 @@
 *The filterContacts API
 * Created by Kartik Sawhney on 4/23/2016
 * Copyright © 2016 Cargi. All rights reserved.
+This is to rank contacts in decreasing order of their event frequency with a given user. 
 */
 
 function checkForDuplicates(results, name) {
@@ -51,12 +52,6 @@ function sortByFrequencyAndRemoveDuplicates(array) {
 
     return uniques.sort(compareFrequency);
 }
-
-/*
-*This function uses an SQL query to get the desired information. 
-* We first query for any contacts that the person has an event that day, followed by 
-* a list of those that the person usually has events with, followed by recent contacts, and finally people that the user contacts at that time of the day.
-*/
 
 var api = {
     get: function(request, response, next) {

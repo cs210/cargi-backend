@@ -2,6 +2,7 @@
 *The rankContacts API
 * Created by Kartik Sawhney on 5/29/2016
 * Copyright © 2016 Cargi. All rights reserved.
+A more comprehensive ranking system based on recent calls, frequency and time of the day. This might be used in the later versions of the app once we have more users and data.
 */
 
 function checkForDuplicates(results, name) {

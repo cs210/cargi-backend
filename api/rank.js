@@ -1,7 +1,8 @@
 /*
-*The filterContacts API
-* Created by Kartik Sawhney on 4/23/2016
+*The rankAPI
+* Created by Kartik Sawhney on 6/8/2016
 * Copyright © 2016 Cargi. All rights reserved.
+* This is to rank contacts based on their frequency in the contacts table
 */
 
 function checkForDuplicates(results, name) {
