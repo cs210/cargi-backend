@@ -73,7 +73,7 @@ var api = {
 
             var user_id = results[0]["id"]
 
-            var query2 = {sql: 'SELECT c.name as name, c.id as id1, e.id as id2, ec.contact_id as id3, ec.event_id as id4, e.user_id as id5, "filter" as id6 FROM contacts c, event_history e, event_contacts ec where e.user_id = @user_id)',
+            var query2 = {sql: 'SELECT c.name as name, c.id as id1, e.id as id2, ec.contact_id as id3, ec.event_id as id4 FROM contacts c, event_history e, event_contacts ec where e.user_id = @user_id)',
             parameters: [
                 { name: 'user_id', value: user_id}
             ]
@@ -81,33 +81,15 @@ var api = {
             request.azureMobile.data.execute(query2)
             .then(function(results) {
                 var finalArray = []
-                response.send(results);
-
-                /*
                 for (var i = 0; i < results.length; i++) {
-                    var id5String = "Optional(" + results[i]["id5"] + ")"
-
-                    if (results[i]["id5"] != user_id && id5String != user_id) {
-                        continue;
-                    }
                     if (results[i]["id1"] && results[i]["id2"] && results[i]["id3"] && results[i]["id4"]) {
-                        var id1String = "Optional(" + results[i]["id1"] + ")";
-                        var id2String = "Optional(" + results[i]["id2"] + ")";
-                        var id3String = "Optional(" + results[i]["id3"] + ")";
-                        var id4String = "Optional(" + results[i]["id4"] + ")";
-                        //if ((results[i]["id1"].indexOf(results[i]["id3"]) > -1 || results[i]["id3"].indexOf(results[i]["id1"]) > -1) && (results[i]["id2"].indexOf(results[i]["id4"]) > -1 || results[i]["id4"].indexOf(results[i]["id2"]) > -1)) {
-                        if ((results[i]["id1"] == results[i]["id3"] || results[i]["id1"] == id3String || results[i]["id3"] == id1String) && (results[i]["id2"] == results[i]["id4"] || results[i]["id2"] == id4String || results[i]["id4"] == id2String)) {
+                        if (results[i]["id1"] == results[i]["id3"] && results[i]["id2"] == results[i]["id4"]) {
                             finalArray.push(results[i]["name"])
-                            finalArray.push(results[i]["id1"])
-                            finalArray.push(results[i]["id2"])
-                            finalArray.push(results[i]["id3"])
-                            finalArray.push(results[i]["id4"])
                         }
                     }
                 }
-                //finalArray = sortByFrequencyAndRemoveDuplicates(finalArray)
+                finalArray = sortByFrequencyAndRemoveDuplicates(finalArray)
                 response.send(finalArray);
-                */
             });
         });
     }
