@@ -73,7 +73,7 @@ var api = {
 
             var user_id = results[0]["id"]
 
-            var query2 = {sql: 'SELECT c.name as name, c.id as id1, e.id as id2, ec.contact_id as id3, ec.event_id as id4, e.user_id as id5 FROM contacts c, event_history e, event_contacts ec where c.id = ec.contact_id AND e.id = ec.event_id'
+            var query2 = {sql: "SELECT c.name as name, c.id as id1, e.id as id2, ec.contact_id as id3, ec.event_id as id4, e.user_id as id5 FROM contacts c, event_history e, event_contacts ec where (c.id = ec.contact_id OR c.id LIKE '%' + ec.contact_id + '%' OR ec.contact_id LIKE '%' + c.id + '%') AND (e.id = ec.event_id OR e.id LIKE '%' + ec.event_id + '%' OR ec.event_id LIKE '%' + e.id + '%')"
             };
             request.azureMobile.data.execute(query2)
             .then(function(results) {
