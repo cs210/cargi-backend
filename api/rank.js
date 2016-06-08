@@ -1,8 +1,8 @@
 /*
-*The filterContacts API
-* Created by Kartik Sawhney on 4/23/2016
+*The rankAPI
+* Created by Kartik Sawhney on 6/8/2016
 * Copyright © 2016 Cargi. All rights reserved.
-This is to rank contacts in decreasing order of their event frequency with a given user. 
+* This is to rank contacts based on their frequency in the contacts table
 */
 
 function checkForDuplicates(results, name) {
@@ -53,6 +53,12 @@ function sortByFrequencyAndRemoveDuplicates(array) {
     return uniques.sort(compareFrequency);
 }
 
+/*
+*This function uses an SQL query to get the desired information. 
+* We first query for any contacts that the person has an event that day, followed by 
+* a list of those that the person usually has events with, followed by recent contacts, and finally people that the user contacts at that time of the day.
+*/
+
 var api = {
     get: function(request, response, next) {
         var query = {sql: 'SELECT id from users where email=@email',
@@ -68,22 +74,22 @@ var api = {
 
             var user_id = results[0]["id"]
 
-            var query2 = {sql: 'SELECT c.name as name, c.id as id1, e.id as id2, ec.contact_id as id3, ec.event_id as id4, e.user_id as id5 FROM contacts c, event_history e, event_contacts ec where c.id = ec.contact_id AND e.id = ec.event_id'
-            };
+            var query2 = {sql: 'SELECT name FROM contacts where user_id = @user_id',
+            parameters: [
+                { name: 'user_id', value: user_id }
+            ]
+        };
             request.azureMobile.data.execute(query2)
             .then(function(results) {
                 var finalArray = []
                 for (var i = 0; i < results.length; i++) {
-                    if (results[i]["id5"]) {
-                        if (results[i]["id5"] == user_id) {
-                            finalArray.push(results[i]["name"])
-                        }
-                    }
+                    finalArray.push(results[i]["name"])
                 }
+
                 if (finalArray.length != 0) {
                     finalArray = sortByFrequencyAndRemoveDuplicates(finalArray)
                 }
-                response.json(finalArray);
+                response.send(finalArray);
             });
         });
     }
