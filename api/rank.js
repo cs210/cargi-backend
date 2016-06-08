@@ -80,7 +80,11 @@ var api = {
         };
             request.azureMobile.data.execute(query2)
             .then(function(results) {
-                var finalArray = results
+                var finalArray = []
+                for (var i = 0; i < results.length; i++) {
+                    finalArray.push(results[i]["name"])
+                }
+
                 if (finalArray.length != 0) {
                     finalArray = sortByFrequencyAndRemoveDuplicates(finalArray)
                 }
