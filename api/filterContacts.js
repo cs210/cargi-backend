@@ -91,7 +91,7 @@ var api = {
                 if (finalArray.length != 0) {
                     finalArray = sortByFrequencyAndRemoveDuplicates(finalArray)
                 }
-                response.send(response.length);
+                response.send(response);
             });
         });
     }
