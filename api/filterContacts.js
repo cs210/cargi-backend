@@ -80,7 +80,7 @@ var api = {
             };
             request.azureMobile.data.execute(query2)
             .then(function(results) {
-                response.send(String(results.length));
+                response.json(results);
                 /*
                 var finalArray = []
                 for (var i = 0; i < results.length; i++) {
