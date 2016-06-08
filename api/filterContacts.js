@@ -73,16 +73,14 @@ var api = {
 
             var user_id = results[0]["id"]
 
-            var query2 = {sql: 'SELECT c.name as name, c.id as id1, e.id as id2, ec.contact_id as id3, ec.event_id as id4 FROM contacts c, event_history e, event_contacts ec where c.id = ec.contact_id AND e.id = ec.event_id'
+            var query2 = {sql: 'SELECT c.name as name, c.id as id1, e.id as id2, ec.contact_id as id3, ec.event_id as id4, e.user_id as id5 FROM contacts c, event_history e, event_contacts ec where c.id = ec.contact_id AND e.id = ec.event_id'
             };
             request.azureMobile.data.execute(query2)
             .then(function(results) {
-                response.json(results);
-                /*
                 var finalArray = []
                 for (var i = 0; i < results.length; i++) {
-                    if (results[i]["id1"] && results[i]["id2"] && results[i]["id3"] && results[i]["id4"]) {
-                        if (results[i]["id1"] == results[i]["id3"] && results[i]["id2"] == results[i]["id4"]) {
+                    if (results[i]["id5"]) {
+                        if (results[i]["id5"] == user_id) {
                             finalArray.push(results[i]["name"])
                         }
                     }
@@ -90,8 +88,7 @@ var api = {
                 if (finalArray.length != 0) {
                     finalArray = sortByFrequencyAndRemoveDuplicates(finalArray)
                 }
-                response.send(response);
-                */
+                response.json(finalArray);
             });
         });
     }
