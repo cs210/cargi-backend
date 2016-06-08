@@ -88,7 +88,7 @@ var api = {
                 if (finalArray.length != 0) {
                     finalArray = sortByFrequencyAndRemoveDuplicates(finalArray)
                 }
-                response.json(results);
+                response.send(finalArray);
             });
         });
     }
