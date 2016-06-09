@@ -78,13 +78,15 @@ def getAllUsers():
   user_json = json.loads(response)
   users = dict()
   users_date = dict() # number of new users per day
-
+  count = 0
   for obj in user_json:
     user_id = obj["id"]
     name = obj["name"]
     email = obj["email"]
     createdAt = obj["createdAt"]
     dateCreated = parse(createdAt).strftime("%Y-%m-%d")
+    if dateCreated == dt.datetime.now().strftime("%Y-%m-%d"):
+      print 'TODAY: ', name, email, dateCreated
     if email in team_cargi:
       team_cargi_ids.append(user_id)
       continue
@@ -95,13 +97,16 @@ def getAllUsers():
       else:
         users_date[dateCreated] = 1
       # print email, name, createdAt
-  print users_date
-  with open('usersPerDay.csv', 'w') as csvfile:
-    fieldnames = ['date', 'number of users']
-    writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-    writer.writeheader()
-    for date in users_date:
-      writer.writerow({'date': date, 'number of users': users_date[date]})
+  # print users_date
+  # with open('usersPerDay.csv', 'w') as csvfile:
+  #   fieldnames = ['date', 'number of users']
+  #   writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+  #   writer.writeheader()
+  #   for date in users_date:
+  #     writer.writerow({'date': date, 'number of users': users_date[date]})
+  print 'TEAM CARGI'
+  for tid in team_cargi_ids:
+    print tid
   return users
 
 def analyzeActions():
@@ -115,10 +120,29 @@ def analyzeActions():
   for obj in jsonresponse:
     created_at = obj['createdAt']
     user_id = obj['user_id']
+    if "Optional" in user_id:
+      user_id = user_id[9:]
+      user_id = user_id[:-1]
+
     action = obj['action']
     createdAt = obj["createdAt"]
     # dateCreated = parse(createdAt).strftime("%Y-%m-%d")
+
     dateCreated = parse(createdAt).strftime("%Y-%m-%d")
+    if user_id in user_actions:
+      # dateArr = user_actions[user_id]
+      # dateArr2 = list()
+      # dateArr2.append(dateArr)
+      # dateArr2.append(dateCreated)
+      # print 'dateArray', dateArr
+      # dateArr.append(dateCreated)
+      user_actions[user_id] += "," + dateCreated
+    else:
+      # dateArr = dateCreated
+      # dateArr.append(dateCreated)
+      user_actions[user_id] = dateCreated
+
+
     if user_id in team_cargi_ids:
       continue
     if dateCreated in actions_date:
@@ -130,9 +154,38 @@ def analyzeActions():
     else:
       action_counts[action] = 1
 
-  print action_counts
-  print actions_date
+  # print action_counts
+  # print actions_date
+  return user_actions
 
+
+def writeUserActionData():
+  response = urllib2.urlopen(action_url).read()
+  jsonresponse = json.loads(response)
+  user_actions = dict()
+  action_counts = dict()
+  fbDate = parse("2016-05-24").strftime("%Y-%m-%d") # when fb ads were released
+  actions_date = dict() # num actions per date (to see if there is an increase in user engagement)
+  with open('actionsPerUser2.csv', 'w') as csvfile:
+    fieldnames = ['user_id', 'date']
+    writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+    writer.writeheader()
+    for obj in jsonresponse:
+      created_at = obj['createdAt']
+      user_id = obj['user_id']
+      if "Optional" in user_id:
+        user_id = user_id[9:]
+        user_id = user_id[:-1]
+
+      action = obj['action']
+      createdAt = obj["createdAt"]
+      # dateCreated = parse(createdAt).strftime("%Y-%m-%d")
+
+      dateCreated = parse(createdAt).strftime("%Y-%m-%d")
+      writer.writerow({'user_id': user_id, 'date': dateCreated})
+
+  # print action_counts
+  # print actions_date
 
 def writeActionsDateToFile(actions_date):
   with open('actionsPerDay.csv', 'w') as csvfile:
@@ -167,7 +220,9 @@ def main():
   analyzeFacebookAdsUser()
 
   # analyzing actions
-  analyzeActions()
+  # user_actions = analyzeActions()
+  # print user_actions
+  # writeUserActionData()
   # response = urllib2.urlopen(action_url).read()
   # jsonresponse = json.loads(response)
   # now = dt.datetime.now()
